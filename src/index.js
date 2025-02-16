@@ -102,3 +102,11 @@ $("#interface").addEventListener("click", async () => {
         await hideAccountMenu();
     }
 });
+
+$("#manage-account-button").addEventListener("click", async () => {
+    window.location.href = "https://auth.cominatyou.com";
+});
+
+$("#logout-button").addEventListener("click", async () => {
+    window.location.href = "https://auth.cominatyou.com/logout?nsr=false";
+});
