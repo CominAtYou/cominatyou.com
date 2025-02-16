@@ -1,12 +1,30 @@
+/**
+ * @param {string} selector
+ * @returns {HTMLElement}
+ */
+const $ = (selector) => { return document.querySelector(selector) } ;
+
 if (new URLSearchParams(window.location.search).get("skipani") === "true") {
-    document.getElementById("hero-top-text").style.opacity = 1;
-    document.getElementById("hero-btm-text").style.opacity = 1;
-    document.getElementById("hero-top-text").style.transform = "translateY(0)";
-    document.getElementById("hero-btm-text").style.transform = "translateY(0)";
+    $("#hero-btm-text").style.opacity = 1;
+    $("#hero-top-text").style.opacity = 1;
+    $("#github-button-wrapper").style.opacity = 1;
+    $("#twitter-button-wrapper").style.opacity = 1;
+
+    $("#hero-top-text").style.transform = "translateY(0)";
+    $("#hero-btm-text").style.transform = "translateY(0)";
+    $("#github-button-wrapper").style.transform = "translateY(0)";
+    $("#twitter-button-wrapper").style.transform = "translateY(0)";
+    $(".account-icon-wrapper").style.opacity = 1;
 }
 
-/** @param {string} selector */
-const $ = (selector) => document.querySelector(selector);
+$("#github-button").addEventListener("click", () => {
+    window.open("https://github.com/CominAtYou", "_blank", "noreferrer");
+});
+
+$("#twitter-button").addEventListener("click", () => {
+    window.open("https://twitter.com/iiCominAtYou", "_blank", "noreferrer");
+});
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     await anime({
@@ -16,14 +34,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         delay: anime.stagger(1100, { start: 500 }),
         duration: 750,
         easing: 'easeOutQuart',
-
     }).finished;
 
     await anime({
         targets: '#github-button-wrapper, #twitter-button-wrapper',
         translateY: 0,
         opacity: 1,
-        delay: anime.stagger(750, { start: 500 }),
+        delay: anime.stagger(475, { start: 250 }),
         duration: 750,
         begin: () => {
             $("#github-button").style.pointerEvents = "auto";
@@ -33,20 +50,55 @@ document.addEventListener("DOMContentLoaded", async () => {
         },
     }).finished;
 
-    // await anime({
-    //     targets: "#hero-text",
-    //     translateY: -48,
-    //     opacity: 0,
-    //     delay: 750,
-    //     duration: 1000,
-    //     easing: 'easeOutQuart'
-    // }).finished;
+    const res = await fetch("https://api.cominatyou.com/users/me", { credentials: "include" });
+
+    if (res.status === 200) {
+        const data = await res.json();
+        $("#account-menu-global-name-text").innerText = `Hi ${data.global_name.replace(/!$/, "")}!`;
+        $("#account-menu-username-text").innerText = `@${data.username}`;
+    }
+
+    $("#account-menu-wrapper").classList.replace("hidden", "flex");
+
+    anime({
+        targets: "#account-menu-wrapper",
+        opacity: 1,
+        duration: 500,
+        easing: "linear"
+    });
 });
 
-$("#github-button").addEventListener("click", () => {
-    window.open("https://github.com/CominAtYou/", "_blank", "noreferrer");
+async function hideAccountMenu() {
+    await anime({
+        targets: "#account-menu",
+        opacity: 0,
+        duration: 100,
+        endDelay: 150,
+        easing: "linear"
+    }).finished;
+
+    $("#account-menu").classList.replace("flex", "hidden");
+}
+
+$("#account-button").addEventListener("click", async () => {
+    const element = $("#account-menu");
+    if (element.classList.contains("hidden")) {
+        element.classList.replace("hidden", "flex");
+
+        anime({
+            targets: "#account-menu",
+            opacity: 1,
+            duration: 100,
+            easing: "linear"
+        });
+    }
+    else {
+        await hideAccountMenu();
+    }
 });
 
-$("#twitter-button").addEventListener("click", () => {
-    window.open("https://twitter.com/iiCominAtYou", "_blank", "noreferrer");
+$("#interface").addEventListener("click", async () => {
+    if ($("#account-menu").classList.contains("flex")) {
+        await hideAccountMenu();
+    }
 });

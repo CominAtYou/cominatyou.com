@@ -63,6 +63,11 @@ html, body {
 	overflow: hidden;
 }
 
+.avatar-bg {
+	background-image: url('https://api.cominatyou.com/users/me/avatar');
+	background-size: cover;
+}
+
 @keyframes twinkle {
 	25% {
 		opacity: 0;
