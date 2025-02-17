@@ -103,10 +103,10 @@ $("#interface").addEventListener("click", async () => {
     }
 });
 
-$("#manage-account-button").addEventListener("click", async () => {
+$("#manage-account-button").addEventListener("click", () => {
     window.location.href = "https://auth.cominatyou.com";
 });
 
-$("#logout-button").addEventListener("click", async () => {
+$("#sign-out-button").addEventListener("click", () => {
     window.location.href = "https://auth.cominatyou.com/logout?nsr=false";
 });
