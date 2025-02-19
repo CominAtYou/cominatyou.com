@@ -41,6 +41,13 @@
 	font-style: normal;
 }
 
+.inter-semibold {
+	font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui;
+	font-optical-sizing: auto;
+	font-weight: 600;
+	font-style: normal;
+}
+
 html {
 	background: #3b2f4a;
 }
