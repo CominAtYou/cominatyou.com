@@ -56,16 +56,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         const data = await res.json();
         $("#account-menu-global-name-text").innerText = `Hi ${data.global_name.replace(/!$/, "")}!`;
         $("#account-menu-username-text").innerText = `@${data.username}`;
+
+        $("#account-menu-wrapper").classList.replace("hidden", "flex");
+
+        anime({
+            targets: "#account-menu-wrapper",
+            opacity: 1,
+            duration: 500,
+            easing: "linear"
+        });
     }
-
-    $("#account-menu-wrapper").classList.replace("hidden", "flex");
-
-    anime({
-        targets: "#account-menu-wrapper",
-        opacity: 1,
-        duration: 500,
-        easing: "linear"
-    });
 });
 
 async function hideAccountMenu() {
