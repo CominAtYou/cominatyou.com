@@ -110,3 +110,30 @@ $("#manage-account-button").addEventListener("click", () => {
 $("#sign-out-button").addEventListener("click", () => {
     window.location.href = "https://auth.cominatyou.com/logout?nsr=false";
 });
+
+/** @param {boolean} matches */
+function updateSafeArea(matches) {
+    if (matches) {
+        const rootStyles = getComputedStyle(document.documentElement);
+        const safeAreaBottom = rootStyles.getPropertyValue('--safe-area-bottom').trim();
+        const safeAreaLeft = rootStyles.getPropertyValue('--safe-area-left').trim();
+
+        console.log(safeAreaBottom, safeAreaLeft);
+
+        if (safeAreaBottom === "0px") return;
+
+        $("#interface").style.paddingBottom = `calc(2rem + ${safeAreaBottom})`;
+        $("#interface").style.paddingLeft = `calc(2rem + ${safeAreaLeft})`;
+
+    }
+    else {
+        $("#interface").style.paddingBottom = "";
+        $("#interface").style.paddingLeft = "";
+    }
+}
+
+window.matchMedia("screen and (orientation: landscape) and (max-width: 1023px)").addEventListener("change", (e) => {
+    updateSafeArea(e.matches);
+});
+
+updateSafeArea(window.matchMedia("screen and (orientation: landscape) and (max-width: 1023px)").matches);

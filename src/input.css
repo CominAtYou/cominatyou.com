@@ -4,6 +4,9 @@
 
 :root {
 	--twinkle-duration: 4s;
+	--safe-area-bottom: env(safe-area-inset-bottom);
+	--safe-area-left: env(safe-area-inset-left);
+
 }
 
 .ui-font-light {
@@ -142,3 +145,7 @@ html, body {
 .comet-c {
 	animation-delay: -5s;
 }
+
+/* #interface {
+	padding-bottom: env(safe-area-inset-bottom);
+} */
